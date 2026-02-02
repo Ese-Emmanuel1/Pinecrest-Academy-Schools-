@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>PineCrest Academy — Academic Report</title>
+  <meta name="description" content="Official PineCrest Academy Academic Report" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Add html2canvas and jsPDF libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* =============== Pinecrest Global Styles (from main site) =============== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      overflow-x: hidden;
+      color: #333;
+      background-color: #f5f7fa;
+      max-width: 100vw;
+    }
+
+    /* =============== Reuse Header & Nav from Main Site =============== */
+    header {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      padding: 12px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 100vw;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(26, 95, 180, 0.1);
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      width: 55px;
+      height: 55px;
+      margin-right: 15px;
+      background: linear-gradient(135deg, #1a5fb4 0%, #1c71d8 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #1a5fb4;
+    }
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a5fb4;
+      letter-spacing: 0.5px;
+    }
+    .school-motto {
+      font-style: italic;
+      color: #1a5fb4;
+      font-weight: 600;
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 2px solid #1a5fb4;
+      text-shadow: 0 0 5px rgba(26, 95, 180, 0.2);
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin: 0 12px;
+      position: relative;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 600;
+      font-size: 16px;
+      transition: color 0.3s;
+      padding: 8px 5px;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #1a5fb4;
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    nav ul li a:hover {
+      color: #1a5fb4;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 1002;
+      padding: 8px;
+    }
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #1a5fb4;
+      margin: 3px 0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* =============== Mobile Nav Drawer (from main site) =============== */
+    .overlay-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+      transition: right 0.3s ease-in-out;
+      padding: 60px 20px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-nav.active {
+      right: 0;
+    }
+    .close-nav {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #1a5fb4;
+      background: rgba(26, 95, 180, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-nav ul {
+      list-style: none;
+      margin-top: 20px;
+    }
+    .mobile-nav ul li {
+      margin-bottom: 10px;
+    }
+    .mobile-nav ul li a {
+      display: block;
+      padding: 15px;
+      color: #333;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mobile-nav ul li a:hover {
+      background-color: #f0f7ff;
+      color: #1a5fb4;
+    }
+    .mobile-nav-header {
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 15px;
+    }
+
+    /* =============== Main Content =============== */
+    .main-wrapper {
+      padding-top: 100px;
+      padding-bottom: 80px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #1a5fb4;
+      margin-bottom: 12px;
+    }
+    .page-header p {
+      color: #666;
+      font-size: 15px;
+    }
+
+    /* =============== AFRICAN-STYLE ACADEMIC REPORT =============== */
+    .report-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 82, 155, 0.25);
+      overflow: hidden;
+      border: 2px solid #1e88e5;
+      position: relative;
+      width: 21cm; /* For desktop/print */
+      min-height: 29.7cm;
+      margin: 30px auto;
+      display: block;
+    }
+    
+    /* Header with Logo and School Info */
+    .report-header {
+      background: linear-gradient(to right, #0d47a1, #1e88e5, #64b5f6);
+      color: white;
+      padding: 20px 25px 15px;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px double white;
+    }
+    
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    
+    .logo-circle {
+      width: 70px;
+      height: 70px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      border: 3px solid #bbdefb;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    }
+    
+    .logo-icon {
+      font-size: 35px;
+      color: #1e88e5;
+    }
+    
+    .school-name {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: 'Georgia', serif;
+    }
+    
+    .school-address {
+      margin-top: 5px;
+      font-size: 15px;
+      opacity: 0.95;
+      font-weight: 500;
+    }
+    
+    .school-motto-report {
+      font-style: italic;
+      margin-top: 8px;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #bbdefb;
+      font-weight: 600;
+      border-top: 1px solid rgba(187, 222, 251, 0.3);
+      border-bottom: 1px solid rgba(187, 222, 251, 0.3);
+      padding: 6px 0;
+      display: inline-block;
+      margin-top: 12px;
+    }
+    
+    /* Student Info Section */
+    .student-info {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 20px 25px;
+      background-color: #e3f2fd;
+      border-bottom: 3px solid #90caf9;
+    }
+    
+    .info-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-label {
+      font-weight: 700;
+      color: #0d47a1;
+      font-size: 14px;
+      margin-bottom: 4px;
+      background-color: #bbdefb;
+      padding: 3px 8px;
+      border-radius: 4px 4px 0 0;
+      border: 1px solid #90caf9;
+      border-bottom: none;
+    }
+    
+    .info-value {
+      font-size: 15px;
+      padding: 8px 10px;
+      background-color: white;
+      border-radius: 0 0 4px 4px;
+      border: 1px solid #90caf9;
+      font-weight: 600;
+    }
+    
+    /* Term Report Section */
+    .term-report-section {
+      padding: 18px 25px 25px;
+    }
+    
+    .section-title {
+      font-size: 22px;
+      color: #0d47a1;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #1e88e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      background: linear-gradient(to right, #e3f2fd, white, #e3f2fd);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+      border: 1px solid #bbdefb;
+    }
+    
+    .section-title i {
+      margin-right: 12px;
+      color: #0d47a1;
+      font-size: 24px;
+    }
+    
+    /* Table Styling - Traditional African Report Card Style */
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      border: 3px solid #0d47a1;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+    }
+    
+    .report-table thead {
+      background: linear-gradient(to bottom, #1e88e5, #0d47a1);
+    }
+    
+    /* UPDATED: Dark bold blue header text */
+    .report-table th {
+      color: #0d1b3e; /* Dark blue color */
+      font-weight: 900; /* Extra bold */
+      text-align: center;
+      padding: 14px 5px;
+      border-right: 2px solid #64b5f6;
+      font-size: 15px; /* Slightly larger */
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3); /* Subtle text shadow */
+    }
+    
+    .report-table th:last-child {
+      border-right: none;
+    }
+    
+    /* Updated column widths for 7-column structure */
+    .report-table th:nth-child(1) {
+      width: 35%; /* More space for subjects */
+    }
+    
+    .report-table th:nth-child(2),
+    .report-table th:nth-child(3),
+    .report-table th:nth-child(4) {
+      width: 11%;
+    }
+    
+    .report-table th:nth-child(5),
+    .report-table th:nth-child(6),
+    .report-table th:nth-child(7) {
+      width: 9%;
+    }
+    
+    .report-table td {
+      padding: 12px 5px;
+      border-bottom: 1px solid #e1f5fe;
+      border-right: 1px solid #e1f5fe;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      vertical-align: middle; /* Center content vertically */
+    }
+    
+    /* UPDATED: Table lines in dark blue */
+    .report-table thead tr,
+    .report-table tbody tr {
+      border-bottom: 2px solid #0d47a1;
+    }
+    
+    .report-table td {
+      border-bottom: 1px solid #0d47a1;
+      border-right: 1px solid #0d47a1;
+    }
+    
+    .report-table th {
+      border-right: 2px solid #0d47a1;
+    }
+    
+    /* UPDATED: Proper subject alignment */
+    .report-table td:first-child {
+      text-align: left;
+      padding-left: 15px;
+    }
+    
+    .report-table tr:nth-child(even) {
+      background-color: #f5fbff;
+    }
+    
+    .report-table tr:nth-child(odd) {
+      background-color: white;
+    }
+    
+    .report-table tr:hover {
+      background-color: #e3f2fd;
+    }
+    
+    /* UPDATED: Subject column with better alignment */
+    .subject-col {
+      text-align: left;
+      font-weight: 700;
+      color: #0d47a1; /* Dark blue for subjects */
+      padding-left: 15px; /* More padding for better alignment */
+      font-size: 14px;
+      line-height: 1.5; /* Better line spacing */
+      vertical-align: middle; /* Better vertical alignment */
+    }
+    
+    .fail-grade {
+      color: #d32f2f;
+      font-weight: bold;
+      background-color: #ffebee;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 1px solid #ffcdd2;
+      font-size: 13px;
+    }
+    
+    .pass-grade {
+      color: #388e3c;
+      font-weight: bold;
+      background-color: #e8f5e9;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 1px solid #c8e6c9;
+      font-size: 13px;
+    }
+    
+    /* =============== UPDATED: MERGED GRADING TABLE =============== */
+    .merged-grading-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      border: 2px solid #0d47a1;
+      font-size: 11px;
+      background-color: #f0f8ff;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .merged-grading-table th {
+      background-color: #0d47a1;
+      color: white;
+      font-weight: 700;
+      padding: 8px 4px;
+      text-align: center;
+      border: 1px solid #0d47a1;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .merged-grading-table td {
+      padding: 4px 6px;
+      border: 1px solid #90caf9;
+      text-align: left;
+      font-weight: 500;
+      line-height: 1.3;
+      vertical-align: top;
+    }
+    
+    .merged-grading-table tr:nth-child(even) {
+      background-color: #e3f2fd;
+    }
+    
+    .merged-grading-table tr:nth-child(odd) {
+      background-color: white;
+    }
+    
+    /* Column widths for merged table */
+    .merged-grading-table th:nth-child(1),
+    .merged-grading-table td:nth-child(1) {
+      width: 20%;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .merged-grading-table th:nth-child(2),
+    .merged-grading-table td:nth-child(2) {
+      width: 40%;
+    }
+    
+    .merged-grading-table th:nth-child(3),
+    .merged-grading-table td:nth-child(3) {
+      width: 40%;
+    }
+    
+    /* =============== REDUCED SIZE SECTIONS =============== */
+    
+    /* UPDATED: Reduced Next Term Resumption Date */
+    .next-term-info {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #fff3e0;
+      border-radius: 6px;
+      border: 1px solid #ff9800;
+      text-align: center;
+    }
+    
+    .next-term-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e65100;
+      margin-bottom: 4px;
+    }
+    
+    .next-term-date {
+      font-size: 14px;
+      font-weight: 800;
+      color: #d84315;
+      padding: 4px 8px;
+      background-color: white;
+      border-radius: 4px;
+      border: 1px solid #ff9800;
+      display: inline-block;
+    }
+    
+    /* UPDATED: Reduced Performance Notice */
+    .performance-notice {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background-color: #fff3e0;
+      border-left: 5px solid #ff9800;
+      border-radius: 5px;
+      border: 1px solid #ffcc80;
+    }
+    
+    .notice-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .notice-icon {
+      color: #e65100;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    
+    .notice-title {
+      font-weight: 700;
+      color: #e65100;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    
+    .notice-content {
+      color: #5d4037;
+      line-height: 1.4;
+      font-size: 12px;
+    }
+    
+    /* Footer Section - REDUCED */
+    .report-footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 25px 15px;
+      background-color: #f0f8ff;
+      border-top: 3px solid #1e88e5;
+      position: relative;
+    }
+    
+    .signature-area {
+      width: 45%;
+    }
+    
+    .signature-line {
+      border-top: 1px solid #0d47a1;
+      margin-top: 20px;
+      padding-top: 4px;
+      text-align: center;
+      color: #0d47a1;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .principal-stamp {
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    
+    /* UPDATED: Reduced Class Teacher Comment */
+    .comment-label {
+      font-weight: 700; 
+      color: #0d47a1; 
+      margin-bottom: 4px; 
+      font-size: 13px;
+    }
+    
+    .comment-box {
+      padding: 8px 10px;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid #bbdefb;
+      min-height: 60px;
+      margin-top: 4px;
+      font-style: italic;
+      color: #333;
+      line-height: 1.3;
+      font-size: 12px;
+    }
+    
+    /* Decorative Elements */
+    .border-decoration {
+      height: 8px;
+      background: repeating-linear-gradient(45deg, #0d47a1, #0d47a1 10px, #64b5f6 10px, #64b5f6 20px);
+    }
+    
+    .watermark {
+      position: absolute;
+      bottom: 80px;
+      right: 40px;
+      opacity: 0.06;
+      font-size: 140px;
+      color: #0d47a1;
+      transform: rotate(-25deg);
+      pointer-events: none;
+      z-index: 0;
+      font-weight: 900;
+      font-family: 'Georgia', serif;
+    }
+    
+    .side-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 100%;
+      background: linear-gradient(to bottom, #0d47a1, #1e88e5, #64b5f6, #1e88e5, #0d47a1);
+    }
+    
+    /* Print Styles */
+    @media print {
+      body {
+        padding: 0;
+        background-color: white;
+        margin: 0;
+      }
+      
+      .report-container {
+        box-shadow: none;
+        border: 3px solid #000;
+        border-radius: 0;
+        margin: 0;
+        width: 100%;
+        min-height: 29.7cm;
+        display: block !important;
+      }
+      
+      .print-hide {
+        display: none !important;
+      }
+      
+      .report-table {
+        page-break-inside: avoid;
+      }
+      
+      header, footer, .main-wrapper, .page-header, #status, .btn-print, .btn-download, .btn-image {
+        display: none !important;
+      }
+      
+      .watermark {
+        opacity: 0.1;
+      }
+    }
+    
+    /* PDF Capture Styles */
+    .report-container * {
+      -webkit-print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    
+    .report-header,
+    .report-table thead {
+      -webkit-print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    
+    /* Utility Classes */
+    .text-center {
+      text-align: center;
+    }
+    
+    .text-right {
+      text-align: right;
+    }
+    
+    .mt-15 {
+      margin-top: 15px;
+    }
+    
+    .mb-8 {
+      margin-bottom: 8px;
+    }
+    
+    /* Report Actions */
+    .report-actions {
+      text-align: center;
+      margin-top: 25px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+      min-width: 180px;
+    }
+    
+    .btn-print {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+    }
+    
+    .btn-print:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(46, 204, 113, 0.3);
+    }
+    
+    .btn-download {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+    
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+    }
+    
+    .btn-image {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: white;
+    }
+    
+    .btn-image:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(155, 89, 182, 0.3);
+    }
+    
+    .btn-back {
+      background: linear-gradient(135deg, #1a5fb4, #1c71d8);
+      color: white;
+    }
+    
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(26, 95, 180, 0.3);
+    }
+    
+    /* Loading overlay for PDF generation */
+    .pdf-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .pdf-loading-content {
+      background: white;
+      padding: 35px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 380px;
+      font-size: 14px;
+    }
+    
+    .pdf-loading-spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Image Download Styles */
+    .image-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    
+    .image-preview-container {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow: auto;
+    }
+    
+    .image-preview {
+      max-width: 100%;
+      max-height: 70vh;
+      border: 1px solid #ddd;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+    
+    .preview-controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .preview-btn {
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .preview-download {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: white;
+    }
+    
+    .preview-close {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+    }
+    
+    .preview-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(155, 89, 182, 0.3);
+    }
+    
+    .preview-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.3);
+    }
+    
+    /* =============== MOBILE RESPONSIVE DESIGN =============== */
+    
+    /* For tablets and smaller desktops */
+    @media (max-width: 1200px) {
+      .report-container {
+        width: 95%;
+        min-height: auto;
+        margin: 20px auto;
+      }
+      
+      .student-info {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      
+      .report-table th,
+      .report-table td {
+        padding: 10px 4px;
+        font-size: 13px;
+      }
+      
+      .subject-col {
+        padding-left: 8px;
+        font-size: 13px;
+      }
+      
+      .merged-grading-table {
+        font-size: 10px;
+      }
+      
+      .comment-box {
+        min-height: 50px;
+      }
+    }
+    
+    /* For tablets */
+    @media (max-width: 992px) {
+      .report-container {
+        width: 98%;
+        margin: 15px auto;
+      }
+      
+      .student-info {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      .school-name {
+        font-size: 26px;
+      }
+      
+      .section-title {
+        font-size: 18px;
+        padding: 10px;
+      }
+      
+      .merged-grading-table {
+        font-size: 9px;
+      }
+      
+      .merged-grading-table th {
+        padding: 6px 3px;
+        font-size: 10px;
+      }
+      
+      .merged-grading-table td {
+        padding: 3px 4px;
+      }
+      
+      .comment-box {
+        min-height: 45px;
+        font-size: 11px;
+      }
+      
+      .signature-line {
+        font-size: 11px;
+        margin-top: 15px;
+      }
+      
+      .school-motto { display: none; }
+    }
+    
+    /* For mobile phones */
+    @media (max-width: 768px) {
+      header { 
+        padding: 12px 15px; 
+      }
+      
+      .hamburger { 
+        display: flex; 
+        margin-left: auto; 
+      }
+      
+      nav { 
+        display: none; 
+      }
+      
+      .main-wrapper { 
+        padding-top: 100px; 
+      }
+      
+      .report-container {
+        width: 100%;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0, 82, 155, 0.2);
+      }
+      
+      /* Make the report scrollable horizontally on mobile */
+      .term-report-section {
+        overflow-x: auto;
+        padding: 15px;
+      }
+      
+      .report-table {
+        min-width: 700px; /* Force horizontal scroll for table */
+        font-size: 12px;
+      }
+      
+      .report-table th {
+        font-size: 11px;
+        padding: 8px 3px;
+      }
+      
+      .report-table td {
+        font-size: 12px;
+        padding: 8px 3px;
+      }
+      
+      .subject-col {
+        font-size: 12px;
+        padding-left: 5px;
+      }
+      
+      .student-info {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px;
+        padding: 12px;
+      }
+      
+      .info-label {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      
+      .info-value {
+        font-size: 13px;
+        padding: 6px 8px;
+      }
+      
+      .school-name {
+        font-size: 22px;
+      }
+      
+      .school-address {
+        font-size: 13px;
+      }
+      
+      .school-motto-report {
+        font-size: 15px;
+      }
+      
+      .section-title {
+        font-size: 16px;
+        padding: 8px;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .section-title i {
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
+      
+      .merged-grading-table {
+        font-size: 8px;
+        min-width: 600px;
+      }
+      
+      .merged-grading-table th {
+        padding: 5px 2px;
+        font-size: 9px;
+      }
+      
+      .merged-grading-table td {
+        padding: 2px 3px;
+        line-height: 1.2;
+      }
+      
+      .next-term-info {
+        margin-top: 8px;
+        padding: 6px 10px;
+      }
+      
+      .next-term-title {
+        font-size: 11px;
+      }
+      
+      .next-term-date {
+        font-size: 12px;
+        padding: 3px 6px;
+      }
+      
+      .performance-notice {
+        margin-top: 8px;
+        padding: 8px 10px;
+      }
+      
+      .notice-icon {
+        font-size: 14px;
+      }
+      
+      .notice-title {
+        font-size: 12px;
+      }
+      
+      .notice-content {
+        font-size: 11px;
+      }
+      
+      .report-footer {
+        flex-direction: column;
+        padding: 12px 15px;
+      }
+      
+      .signature-area,
+      .principal-stamp {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+      
+      .principal-stamp {
+        align-items: center;
+      }
+      
+      .comment-label {
+        font-size: 11px;
+      }
+      
+      .comment-box {
+        min-height: 40px;
+        font-size: 10px;
+        padding: 6px 8px;
+      }
+      
+      .signature-line {
+        font-size: 10px;
+        margin-top: 12px;
+        padding-top: 3px;
+      }
+      
+      .watermark {
+        font-size: 70px;
+        bottom: 25px;
+        right: 8px;
+      }
+      
+      /* Button adjustments for mobile */
+      .report-actions {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px 15px;
+        font-size: 13px;
+      }
+    }
+    
+    /* For very small phones */
+    @media (max-width: 480px) {
+      .report-container {
+        border-width: 1px;
+      }
+      
+      .student-info {
+        grid-template-columns: 1fr !important;
+        gap: 6px;
+      }
+      
+      .school-name {
+        font-size: 20px;
+      }
+      
+      .section-title {
+        font-size: 14px;
+      }
+      
+      .report-table {
+        min-width: 650px;
+      }
+      
+      .report-table th {
+        font-size: 10px;
+        padding: 6px 2px;
+      }
+      
+      .report-table td {
+        font-size: 11px;
+        padding: 6px 2px;
+      }
+      
+      .merged-grading-table {
+        min-width: 550px;
+        font-size: 7px;
+      }
+      
+      .merged-grading-table th {
+        font-size: 8px;
+        padding: 4px 2px;
+      }
+      
+      .merged-grading-table td {
+        padding: 2px 2px;
+        line-height: 1.1;
+      }
+      
+      .next-term-title {
+        font-size: 10px;
+      }
+      
+      .next-term-date {
+        font-size: 11px;
+      }
+      
+      .notice-title {
+        font-size: 11px;
+      }
+      
+      .notice-content {
+        font-size: 10px;
+      }
+      
+      .comment-label {
+        font-size: 10px;
+      }
+      
+      .comment-box {
+        font-size: 9px;
+        min-height: 35px;
+      }
+      
+      .fail-grade,
+      .pass-grade {
+        font-size: 11px;
+        padding: 2px 4px;
+      }
+      
+      .watermark {
+        font-size: 50px;
+        bottom: 15px;
+        right: 5px;
+      }
+      
+      .border-decoration {
+        height: 5px;
+      }
+      
+      .side-border {
+        width: 6px;
+      }
+      
+      .logo-circle {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .logo-icon {
+        font-size: 25px;
+      }
+    }
+    
+    /* For landscape orientation on mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .report-container {
+        margin: 5px auto;
+        width: 95%;
+      }
+      
+      .student-info {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      
+      .report-table {
+        min-width: 800px;
+      }
+      
+      .merged-grading-table {
+        min-width: 700px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- === EXACT SAME HEADER & NAV FROM MAIN SITE === -->
+  <div class="overlay-nav" id="overlayNav"></div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="close-nav" id="closeNav">&times;</div>
+    <div class="mobile-nav-header">
+      <div class="logo-container">
+        <div class="logo">PA</div>
+        <div class="logo-text">Pinecrest Academy</div>
+      </div>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="academics.html"><i class="fas fa-book"></i> Academics</a></li>
+      <li><a href="admission.html"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+      <li><a href="resultchecker.html"><i class="fas fa-check-circle"></i> Check Result</a></li>
+      <li><a href="sport.html"><i class="fas fa-basketball-ball"></i> Sports</a></li>
+      <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+      <li><a href="contact_us.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="gallery.html"><i class="fas fa-book-open"></i> Gallery</a></li>
+    </ul>
+  </div>
+
+  <!-- PDF Loading Overlay -->
+  <div class="pdf-loading-overlay" id="pdfLoadingOverlay">
+    <div class="pdf-loading-content">
+      <div class="pdf-loading-spinner"></div>
+      <h3>Generating PDF Report</h3>
+      <p>Please wait while we prepare your academic report for download...</p>
+      <p><small>This may take a few seconds</small></p>
+    </div>
+  </div>
+
+  <!-- Image Preview Overlay -->
+  <div class="image-loading-overlay" id="imageLoadingOverlay">
+    <div class="image-preview-container">
+      <h3>Academic Report Screenshot Preview</h3>
+      <p>This is exactly how your report will look when downloaded as an image</p>
+      <img id="reportScreenshot" class="image-preview" alt="Academic Report Screenshot">
+      <div class="preview-controls">
+        <button class="preview-btn preview-download" id="downloadImageBtn">
+          <i class="fas fa-download"></i> Download Image
+        </button>
+        <button class="preview-btn preview-close" id="closePreviewBtn">
+          <i class="fas fa-times"></i> Close Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <div class="logo">PA</div>
+      <div class="logo-text">Pinecrest Academy</div>
+      <div class="school-motto">Excellence Through Knowledge & Character</div>
+    </div>
+    <div class="hamburger" id="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="resultchecker.html">Check Result</a></li>
+        <li><a href="sport.html">Sports</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact_us.html">Contact</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- === ACADEMIC REPORT CONTENT === -->
+  <div class="main-wrapper">
+    <div class="container">
+      <div class="page-header">
+        <h1>Academic Report Card</h1>
+        <p>Official academic performance report</p>
+      </div>
+
+      <!-- AFRICAN-STYLE ACADEMIC REPORT -->
+      <div class="report-container" id="africanReport">
+        <!-- Side Border -->
+        <div class="side-border"></div>
+        
+        <!-- Top Decorative Border -->
+        <div class="border-decoration"></div>
+        
+        <!-- Header with Logo and School Info -->
+        <div class="report-header">
+          <div class="logo-section">
+            <div class="logo-circle">
+              <i class="fas fa-graduation-cap logo-icon"></i>
+            </div>
+            <div>
+              <div class="school-name">PINECREST ACADEMY</div>
+              <div class="school-address">15 Education Lane, Academic City, Benin, Edo State | Phone: +234 801 234 5678</div>
+            </div>
+          </div>
+          <div class="school-motto-report">"Knowledge, Excellence, and Integrity"</div>
+        </div>
+        
+        <!-- Student Information -->
+        <div class="student-info" id="studentInfo">
+          <div class="info-item">
+            <div class="info-label">STUDENT NAME</div>
+            <div class="info-value" id="reportName">John Chukwuma</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">CLASS</div>
+            <div class="info-value" id="reportClass">JSS 1A</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">ACADEMIC YEAR</div>
+            <div class="info-value" id="reportYear">2023/2024 SESSION</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">TERM</div>
+            <div class="info-value" id="reportTerm">First Term</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">REGISTRATION NO.</div>
+            <div class="info-value" id="reportRegNo">PA/2023/001</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">DATE OF BIRTH</div>
+            <div class="info-value" id="reportDOB">15/05/2010</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">GENDER</div>
+            <div class="info-value" id="reportGender">Male</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">HOUSE</div>
+            <div class="info-value" id="reportHouse">Blue House</div>
+          </div>
+        </div>
+        
+        <!-- Watermark -->
+        <div class="watermark">PINECREST</div>
+        
+        <!-- Term Report Section -->
+        <div class="term-report-section">
+          <div class="section-title">
+            <i class="fas fa-file-alt"></i> <span id="reportTermTitle">FIRST TERM</span> ACADEMIC PERFORMANCE REPORT
+          </div>
+          
+          <!-- UPDATED TABLE WITH DARK BLUE LINES -->
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>SUBJECT</th>
+                <th>FIRST TEST</th>
+                <th>SECOND TEST</th>
+                <th>EXAM</th>
+                <th>TOTAL</th>
+                <th>GRADE</th>
+                <th>REMARK</th>
+              </tr>
+            </thead>
+            <tbody id="academicBody">
+              <!-- Sample data for display -->
+              <tr>
+                <td class="subject-col">1. MATHEMATICS</td>
+                <td>85</td>
+                <td>90</td>
+                <td>88</td>
+                <td>263</td>
+                <td><span class="pass-grade">A</span></td>
+                <td class="pass-grade">Excellent</td>
+              </tr>
+              <tr>
+                <td class="subject-col">2. ENGLISH LANGUAGE</td>
+                <td>78</td>
+                <td>82</td>
+                <td>80</td>
+                <td>240</td>
+                <td><span class="pass-grade">B</span></td>
+                <td class="pass-grade">Very Good</td>
+              </tr>
+              <tr>
+                <td class="subject-col">3. CIVIC EDUCATION</td>
+                <td>65</td>
+                <td>70</td>
+                <td>68</td>
+                <td>203</td>
+                <td><span class="pass-grade">C</span></td>
+                <td class="pass-grade">Good</td>
+              </tr>
+              <tr>
+                <td class="subject-col">4. CHRISTIAN RELIGIOUS STUDIES</td>
+                <td>72</td>
+                <td>75</td>
+                <td>74</td>
+                <td>221</td>
+                <td><span class="pass-grade">B</span></td>
+                <td class="pass-grade">Very Good</td>
+              </tr>
+              <tr>
+                <td class="subject-col">5. SOCIAL STUDIES</td>
+                <td>58</td>
+                <td>62</td>
+                <td>60</td>
+                <td>180</td>
+                <td><span class="pass-grade">D</span></td>
+                <td class="pass-grade">Credit</td>
+              </tr>
+              <tr>
+                <td class="subject-col">6. HOME ECONOMICS</td>
+                <td>45</td>
+                <td>50</td>
+                <td>48</td>
+                <td>143</td>
+                <td><span class="fail-grade">F</span></td>
+                <td class="fail-grade">Fail</td>
+              </tr>
+              <tr>
+                <td class="subject-col">7. AGRICULTURAL SCIENCE</td>
+                <td>68</td>
+                <td>72</td>
+                <td>70</td>
+                <td>210</td>
+                <td><span class="pass-grade">C</span></td>
+                <td class="pass-grade">Good</td>
+              </tr>
+              <tr>
+                <td class="subject-col">8. BASIC SCIENCE</td>
+                <td>80</td>
+                <td>85</td>
+                <td>82</td>
+                <td>247</td>
+                <td><span class="pass-grade">B</span></td>
+                <td class="pass-grade">Very Good</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- UPDATED: SINGLE MERGED GRADING TABLE -->
+          <table class="merged-grading-table">
+            <thead>
+              <tr>
+                <th>GRADING KEY</th>
+                <th>WORK HABIT</th>
+                <th>PSYCHOLOGICAL MOTOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>85 - 100 = A</strong></td>
+                <td>Following instruction</td>
+                <td>Punctuality</td>
+              </tr>
+              <tr>
+                <td><strong>65 - 80 = B</strong></td>
+                <td>Working independently</td>
+                <td>Class Participation</td>
+              </tr>
+              <tr>
+                <td><strong>55 - 60 = C</strong></td>
+                <td>Disturbing others</td>
+                <td>Personal Cleanliness</td>
+              </tr>
+              <tr>
+                <td><strong>35 - 50 = D</strong></td>
+                <td>Do neat work in class</td>
+                <td>Assignment</td>
+              </tr>
+              <tr>
+                <td><strong>25 - 34 = E</strong></td>
+                <td>Take care of materials</td>
+                <td>Regularity</td>
+              </tr>
+              <tr>
+                <td><strong>0 - 24 = F</strong></td>
+                <td>Completion of work</td>
+                <td>General Conduct</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Finishes work on time</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- UPDATED: Reduced Next Term Resumption Date -->
+          <div class="next-term-info">
+            <div class="next-term-title">NEXT TERM RESUMPTION DATE:</div>
+            <div class="next-term-date">MONDAY, JANUARY 15, 2024</div>
+          </div>
+          
+          <!-- UPDATED: Reduced Performance Notice -->
+          <div class="performance-notice">
+            <div class="notice-header">
+              <i class="fas fa-exclamation-triangle notice-icon"></i>
+              <div class="notice-title" id="noticeTitle">GOOD PERFORMANCE</div>
+            </div>
+            <div class="notice-content" id="noticeContent">
+              Satisfactory academic performance. Student shows understanding of curriculum. Needs improvement in Home Economics.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer with Signatures and Comments -->
+        <div class="report-footer">
+          <div class="signature-area">
+            <!-- UPDATED: Reduced Class Teacher Comment -->
+            <div class="comment-label">CLASS TEACHER'S COMMENT:</div>
+            <div class="comment-box" id="teacherComment">
+              John has shown good performance in most subjects but needs to improve in Home Economics. Overall, a satisfactory performance with room for improvement. He participates well in class activities and shows good potential.
+            </div>
+            <div class="signature-line" id="teacherSignature">Mrs. A. O. Johnson<br>Class Teacher</div>
+          </div>
+          
+          <div class="principal-stamp">
+            <div class="signature-line" id="principalSignature">Dr. Benjamin Okoro<br>Principal</div>
+          </div>
+        </div>
+        
+        <!-- Bottom Decorative Border -->
+        <div class="border-decoration"></div>
+      </div>
+
+      <!-- Report Actions -->
+      <div class="report-actions print-hide">
+        <button class="btn btn-print" onclick="printReport()">
+          <i class="fas fa-print"></i> Print Academic Report
+        </button>
+        <button class="btn btn-download" onclick="downloadPDF()">
+          <i class="fas fa-download"></i> Download PDF Report
+        </button>
+        <button class="btn btn-image" onclick="downloadAsImage()">
+          <i class="fas fa-camera"></i> Download as Image
+        </button>
+        <button class="btn btn-back" onclick="window.location.href='resultchecker.html'">
+          <i class="fas fa-arrow-left"></i> Back to Result Checker
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === Scripts: Mobile Nav + Report Generation + PDF Download === -->
+  <script>
+    // === Mobile Nav Toggle (from main site) ===
+    const hamburger = document.getElementById('hamburger-menu');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeNav = document.getElementById('closeNav');
+    const overlayNav = document.getElementById('overlayNav');
+
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.add('active');
+      overlayNav.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    });
+    
+    [closeNav, overlayNav].forEach(el => {
+      el.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        overlayNav.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+    });
+
+    // === Global Variables for Image Download ===
+    let currentReportImageData = null;
+    let currentImageFileName = '';
+
+    // === Report Generation Logic ===
+    window.addEventListener('DOMContentLoaded', () => {
+      // Print function
+      window.printReport = function() {
+        window.print();
+      };
+
+      // PDF Download function
+      window.downloadPDF = async function() {
+        const loadingOverlay = document.getElementById('pdfLoadingOverlay');
+        
+        try {
+          // Get student name for filename
+          const studentName = document.getElementById('reportName').textContent.trim();
+          const className = document.getElementById('reportClass').textContent.trim();
+          const term = document.getElementById('reportTerm').textContent.trim();
+          
+          // Clean filename (remove special characters)
+          const cleanName = studentName.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          const cleanClass = className.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          const cleanTerm = term.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          
+          const fileName = `Pinecrest_Academic_Report_${cleanName}_${cleanClass}_${cleanTerm}.pdf`;
+          
+          console.log('Starting PDF generation:', fileName);
+          
+          // Show loading overlay
+          loadingOverlay.style.display = 'flex';
+          
+          // Generate PDF
+          await generatePDF(fileName);
+          
+          console.log('PDF generated successfully');
+          
+        } catch (error) {
+          console.error('Error in downloadPDF:', error);
+          
+          // User-friendly error message
+          const errorMsg = `PDF generation failed. Please try one of these options:
+          
+    1. Use the "Print" button (Ctrl+P) and choose "Save as PDF"
+    2. Take a screenshot of the report
+    3. Try again in a different browser
+    
+    Error: ${error.message}`;
+          
+          alert(errorMsg);
+        } finally {
+          loadingOverlay.style.display = 'none';
+        }
+      };
+
+      // WORKING IMAGE DOWNLOAD FUNCTION - SIMPLIFIED AND RELIABLE
+      window.downloadAsImage = async function() {
+        const imageOverlay = document.getElementById('imageLoadingOverlay');
+        const reportContainer = document.getElementById('africanReport');
+        const screenshotImage = document.getElementById('reportScreenshot');
+        
+        try {
+          console.log('Generating report screenshot...');
+          
+          // Show image overlay immediately
+          imageOverlay.style.display = 'flex';
+          
+          // Get student name for filename
+          const studentName = document.getElementById('reportName').textContent.trim();
+          const className = document.getElementById('reportClass').textContent.trim();
+          const term = document.getElementById('reportTerm').textContent.trim();
+          
+          // Clean filename (remove special characters)
+          const cleanName = studentName.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          const cleanClass = className.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          const cleanTerm = term.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_');
+          
+          currentImageFileName = `Pinecrest_Academic_Report_${cleanName}_${cleanClass}_${cleanTerm}.png`;
+          
+          // Store original styles
+          const originalStyles = {
+            width: reportContainer.style.width,
+            margin: reportContainer.style.margin,
+            position: reportContainer.style.position,
+            top: reportContainer.style.top,
+            left: reportContainer.style.left,
+            zIndex: reportContainer.style.zIndex
+          };
+          
+          // Adjust container for screenshot
+          const isMobile = window.innerWidth < 768;
+          
+          if (isMobile) {
+            // On mobile, set wider width for better capture
+            Object.assign(reportContainer.style, {
+              width: '800px',
+              margin: '0 auto',
+              position: 'relative',
+              top: 'auto',
+              left: 'auto',
+              zIndex: 'auto'
+            });
+          } else {
+            // On desktop
+            Object.assign(reportContainer.style, {
+              width: '21cm',
+              margin: '0 auto',
+              position: 'relative',
+              top: 'auto',
+              left: 'auto',
+              zIndex: 'auto'
+            });
+          }
+          
+          // Wait for rendering
+          await new Promise(resolve => setTimeout(resolve, 300));
+          
+          // SIMPLE AND RELIABLE CAPTURE
+          const canvas = await html2canvas(reportContainer, {
+            scale: isMobile ? 1 : 1.5,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            allowTaint: true,
+            imageTimeout: 10000,
+            logging: false
+          });
+          
+          if (!canvas) {
+            throw new Error('Canvas creation failed');
+          }
+          
+          console.log('Canvas created:', canvas.width, 'x', canvas.height);
+          
+          // Convert to image data
+          currentReportImageData = canvas.toDataURL('image/png', 1.0);
+          
+          // Show preview
+          screenshotImage.src = currentReportImageData;
+          
+          // Set up download button
+          const downloadBtn = document.getElementById('downloadImageBtn');
+          downloadBtn.onclick = function() {
+            downloadImageFile();
+          };
+          
+          // Set up close button
+          const closeBtn = document.getElementById('closePreviewBtn');
+          closeBtn.onclick = function() {
+            imageOverlay.style.display = 'none';
+            // Restore original styles
+            Object.assign(reportContainer.style, originalStyles);
+          };
+          
+        } catch (error) {
+          console.error('Error generating screenshot:', error);
+          
+          // Provide manual instructions
+          if (window.innerWidth < 768) {
+            alert(`On mobile devices, please use your device's screenshot function:
+            
+1. Android: Power + Volume Down buttons
+2. iPhone: Side button + Volume Up
+3. Or use your phone's screenshot feature
+
+Then save the image from your gallery.`);
+          } else {
+            alert(`Unable to generate screenshot automatically. Please use:
+
+1. Print Screen key (PrtScn) then paste into Paint
+2. Windows: Win + Shift + S
+3. Mac: Command + Shift + 4
+4. Browser screenshot extension`);
+          }
+          
+          // Hide overlay
+          imageOverlay.style.display = 'none';
+        }
+      };
+
+      // Function to download the image file
+      function downloadImageFile() {
+        if (!currentReportImageData) {
+          alert('No image data available. Please try again.');
+          return;
+        }
+        
+        try {
+          // Create a temporary link element
+          const link = document.createElement('a');
+          link.href = currentReportImageData;
+          link.download = currentImageFileName;
+          link.style.display = 'none';
+          
+          // Append to document, click, and remove
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          console.log('Image downloaded:', currentImageFileName);
+          
+          // Show success message
+          setTimeout(() => {
+            alert('Image downloaded successfully! The file has been saved as: ' + currentImageFileName);
+            document.getElementById('imageLoadingOverlay').style.display = 'none';
+          }, 300);
+          
+        } catch (error) {
+          console.error('Error downloading image:', error);
+          alert('Failed to download image. Please try saving the image manually from the preview.');
+        }
+      }
+
+      // PDF generation function
+      async function generatePDF(filename) {
+        const reportContainer = document.getElementById('africanReport');
+        const loadingOverlay = document.getElementById('pdfLoadingOverlay');
+        
+        // Store original styles
+        const originalStyles = {
+          width: reportContainer.style.width,
+          margin: reportContainer.style.margin,
+          boxShadow: reportContainer.style.boxShadow,
+          position: reportContainer.style.position,
+          top: reportContainer.style.top,
+          left: reportContainer.style.left,
+          zIndex: reportContainer.style.zIndex,
+          transform: reportContainer.style.transform
+        };
+        
+        try {
+          console.log('Step 1: Adjusting styles for PDF capture');
+          
+          // Temporarily adjust report container for better capture
+          Object.assign(reportContainer.style, {
+            width: '21cm',
+            margin: '0',
+            boxShadow: 'none',
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            zIndex: '10000',
+            transform: 'translate(0, 0)',
+            backgroundColor: 'white'
+          });
+          
+          // Force a reflow to ensure styles are applied
+          reportContainer.offsetHeight;
+          
+          console.log('Step 2: Waiting for rendering');
+          
+          // Wait for rendering to complete
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          console.log('Step 3: Capturing with html2canvas');
+          
+          // Capture the report container as an image
+          const canvas = await html2canvas(reportContainer, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            allowTaint: true,
+            foreignObjectRendering: true,
+            removeContainer: false,
+            imageTimeout: 30000,
+            onclone: function(clonedDoc) {
+              const clonedContainer = clonedDoc.getElementById('africanReport');
+              if (clonedContainer) {
+                Object.assign(clonedContainer.style, {
+                  width: '21cm',
+                  height: 'auto',
+                  margin: '0',
+                  padding: '0',
+                  boxShadow: 'none',
+                  border: '2px solid #1e88e5',
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  overflow: 'visible',
+                  backgroundColor: 'white'
+                });
+                
+                // Ensure all content is visible
+                const allElements = clonedContainer.querySelectorAll('*');
+                allElements.forEach(el => {
+                  el.style.opacity = '1';
+                  el.style.visibility = 'visible';
+                });
+              }
+            }
+          });
+          
+          if (!canvas) {
+            throw new Error('Canvas creation failed');
+          }
+          
+          console.log('Canvas created:', canvas.width, 'x', canvas.height);
+          
+          // Get image data
+          const imgData = canvas.toDataURL('image/png', 1.0);
+          
+          console.log('Step 4: Creating PDF');
+          
+          // Calculate dimensions for A4 paper (210mm x 297mm)
+          const pdfWidth = 210;
+          const pdfHeight = 297;
+          
+          // Calculate image dimensions to fit A4
+          const imgWidth = pdfWidth - 20;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          
+          console.log('Image dimensions:', imgWidth, 'mm x', imgHeight, 'mm');
+          
+          // Create PDF
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: imgHeight > pdfHeight ? 'portrait' : 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
+          
+          // Add image to PDF with margins
+          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+          
+          console.log('Step 5: Saving PDF');
+          
+          // Save the PDF
+          pdf.save(filename);
+          
+          return true;
+          
+        } catch (error) {
+          console.error('PDF generation error:', error);
+          throw new Error('PDF generation failed. Please use the print option.');
+        } finally {
+          console.log('Step 6: Restoring original styles');
+          
+          // Restore original styles
+          Object.assign(reportContainer.style, originalStyles);
+        }
+      }
+
+      // Check if we have student data in localStorage
+      const studentData = JSON.parse(localStorage.getItem('studentReportData'));
+      const tableName = localStorage.getItem('studentTableName');
+
+      // If no localStorage data, keep the sample data displayed
+      if (!studentData || !tableName) {
+        console.log('Using sample data for preview');
+        return;
+      }
+
+      // Generate the report with actual data if available
+      generateAfricanReport(studentData, tableName);
+      
+      // Clean up localStorage after use
+      localStorage.removeItem('studentReportData');
+      localStorage.removeItem('studentTableName');
+
+      function generateAfricanReport(studentData, tableName) {
+        // Subject structures for different tables
+        const tableSubjectStructures = {
+          'jss1': [
+            { name: 'MATHEMATICS', ca1: 'maths', ca2: 'maths2', exam: 'maths3' },
+            { name: 'ENGLISH LANGUAGE', ca1: 'english', ca2: 'english2', exam: 'english3' },
+            { name: 'CIVIC EDUCATION', ca1: 'civic', ca2: 'civic2', exam: 'civic3' },
+            { name: 'CHRISTIAN RELIGIOUS STUDIES', ca1: 'crs', ca2: 'crs2', exam: 'crs3' },
+            { name: 'SOCIAL STUDIES', ca1: 'social_studies', ca2: 'social_studies2', exam: 'social_studies3' },
+            { name: 'HOME ECONOMICS', ca1: 'home_economic', ca2: 'home_economic2', exam: 'home_economic3' },
+            { name: 'AGRICULTURAL SCIENCE', ca1: 'agric', ca2: 'agric2', exam: 'agric3' },
+            { name: 'BASIC SCIENCE', ca1: 'basic_science', ca2: 'basic_science2', exam: 'basic_science3' }
+          ],
+          'sss1': [
+            { name: 'MATHEMATICS', ca1: 'maths', ca2: 'maths2', exam: 'maths3' },
+            { name: 'ENGLISH LANGUAGE', ca1: 'english', ca2: 'english2', exam: 'english3' },
+            { name: 'CIVIC EDUCATION', ca1: 'civic', ca2: 'civic2', exam: 'civic3' },
+            { name: 'CHRISTIAN RELIGIOUS STUDIES', ca1: 'crs', ca2: 'crs2', exam: 'crs3' },
+            { name: 'ECONOMICS', ca1: 'economics', ca2: 'economics2', exam: 'economics3' },
+            { name: 'GOVERNMENT', ca1: 'government', ca2: 'government2', exam: 'government3' },
+            { name: 'AGRICULTURAL SCIENCE', ca1: 'agric', ca2: 'agric2', exam: 'agric3' },
+            { name: 'BIOLOGY', ca1: 'biology', ca2: 'biology2', exam: 'biology3' }
+          ]
+        };
+        
+        // Get the appropriate subject structure for this table
+        const subjectStructure = tableSubjectStructures[tableName] || tableSubjectStructures['jss1'];
+        
+        // Update report header information
+        document.getElementById('reportTermTitle').textContent = getTermName(studentData.term) || 'TERM';
+        
+        // Update student banner information
+        document.getElementById('reportName').textContent = studentData.name || 'John Chukwuma';
+        document.getElementById('reportClass').textContent = tableName ? tableName.toUpperCase() : 'JSS 1A';
+        document.getElementById('reportYear').textContent = `${studentData.year || '2023/2024'} SESSION`;
+        document.getElementById('reportTerm').textContent = getTermName(studentData.term) || 'First Term';
+        document.getElementById('reportRegNo').textContent = studentData.id || 'PA/2023/001';
+        
+        // Update additional student info (if available in database)
+        document.getElementById('reportDOB').textContent = studentData.dob || '15/05/2010';
+        document.getElementById('reportGender').textContent = studentData.gender || 'Male';
+        document.getElementById('reportHouse').textContent = studentData.house || 'Blue House';
+        
+        // Clear previous academic data
+        const academicBody = document.getElementById('academicBody');
+        academicBody.innerHTML = '';
+
+        let totalSubjects = subjectStructure.length;
+        let subjectsTaken = 0;
+        let failedSubjects = 0;
+        let overallTotal = 0;
+        
+        // Populate academic table with subjects from the correct table structure
+        subjectStructure.forEach((subject, index) => {
+          // Get scores from database fields
+          const firstTest = parseInt(studentData[subject.ca1]) || 0;
+          const secondTest = parseInt(studentData[subject.ca2]) || 0;
+          const exam = parseInt(studentData[subject.exam]) || 0;
+          const subjectTotal = firstTest + secondTest + exam;
+          const subjectGrade = calculateGrade(subjectTotal);
+          const subjectRemark = getRemarkFromGrade(subjectGrade);
+          
+          // Check if subject was taken (has at least one score)
+          if (firstTest > 0 || secondTest > 0 || exam > 0) {
+            subjectsTaken++;
+            overallTotal += subjectTotal;
+            
+            if (subjectGrade === 'F') {
+              failedSubjects++;
+            }
+          }
+
+          const row = document.createElement('tr');
+          const scoreStyle = subjectGrade === 'F' ? 'style="color: #d32f2f; font-weight: bold;"' : '';
+          
+          row.innerHTML = `
+            <td class="subject-col" style="text-align: left; padding-left: 15px;">${index + 1}. ${subject.name}</td>
+            <td ${scoreStyle}>${firstTest > 0 ? firstTest : '-'}</td>
+            <td ${scoreStyle}>${secondTest > 0 ? secondTest : '-'}</td>
+            <td ${scoreStyle}>${exam > 0 ? exam : '-'}</td>
+            <td ${scoreStyle}>${subjectTotal > 0 ? subjectTotal : '-'}</td>
+            <td style="text-align: center;"><span class="${subjectGrade === 'F' ? 'fail-grade' : 'pass-grade'}">${subjectGrade}</span></td>
+            <td style="text-align: center;" class="${subjectGrade === 'F' ? 'fail-grade' : 'pass-grade'}">${subjectRemark}</td>
+          `;
+          academicBody.appendChild(row);
+        });
+
+        // Calculate overall average
+        const overallAverage = subjectsTaken > 0 ? Math.round(overallTotal / subjectsTaken) : 0;
+        
+        // Generate performance notice based on overall average
+        generatePerformanceNotice(overallAverage, failedSubjects, subjectsTaken);
+        
+        // Generate teacher comment
+        generateTeacherComment(overallAverage, failedSubjects, subjectsTaken);
+        
+        // Add current date to student info
+        const currentDate = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('en-GB', options);
+        
+        // Add report date to student info
+        const dateElement = document.createElement('div');
+        dateElement.className = 'info-item';
+        dateElement.innerHTML = `
+          <div class="info-label">REPORT DATE</div>
+          <div class="info-value">${formattedDate}</div>
+        `;
+        
+        const studentInfo = document.querySelector('.student-info');
+        const existingDateElement = studentInfo.querySelector('.info-item:nth-child(9)');
+        if (existingDateElement) {
+          studentInfo.removeChild(existingDateElement);
+        }
+        studentInfo.appendChild(dateElement);
+      }
+
+      function calculateGrade(score) {
+        if (score >= 85) return 'A';
+        if (score >= 65) return 'B';
+        if (score >= 55) return 'C';
+        if (score >= 35) return 'D';
+        if (score >= 25) return 'E';
+        return 'F';
+      }
+
+      function getRemarkFromGrade(grade) {
+        const remarks = {
+          'A': 'Excellent',
+          'B': 'Very Good',
+          'C': 'Good',
+          'D': 'Credit',
+          'E': 'Pass',
+          'F': 'Fail'
+        };
+        return remarks[grade] || 'Pending';
+      }
+
+      function getTermName(termNumber) {
+        const terms = {
+          '1': 'First Term',
+          '2': 'Second Term',
+          '3': 'Third Term'
+        };
+        return terms[termNumber] || termNumber;
+      }
+
+      function generatePerformanceNotice(averageScore, failedCount, subjectsTaken) {
+        const noticeTitle = document.getElementById('noticeTitle');
+        const noticeContent = document.getElementById('noticeContent');
+        
+        if (subjectsTaken === 0) {
+          noticeTitle.textContent = 'NO ACADEMIC RECORD';
+          noticeContent.textContent = 'No academic records found for this term. Please contact the school administration for further information.';
+          return;
+        }
+        
+        if (averageScore >= 85) {
+          noticeTitle.textContent = 'EXCELLENT PERFORMANCE';
+          noticeContent.textContent = 'Outstanding academic achievement! Student demonstrates exceptional understanding and application of knowledge.';
+        } else if (averageScore >= 65) {
+          noticeTitle.textContent = 'VERY GOOD PERFORMANCE';
+          noticeContent.textContent = 'Strong academic performance. Student shows good potential for higher achievements.';
+        } else if (averageScore >= 55) {
+          noticeTitle.textContent = 'GOOD PERFORMANCE';
+          noticeContent.textContent = 'Satisfactory academic performance. Student shows understanding of curriculum.';
+        } else if (averageScore >= 35) {
+          noticeTitle.textContent = 'AVERAGE PERFORMANCE';
+          noticeContent.textContent = 'Acceptable academic performance. Student needs to improve study methods.';
+        } else {
+          noticeTitle.textContent = 'ACADEMIC PERFORMANCE ADVISORY';
+          noticeContent.textContent = `Unsatisfactory performance in ${failedCount} subjects. Significant improvement needed. Requires intensive remediation.`;
+        }
+      }
+
+      function generateTeacherComment(averageScore, failedCount, subjectsTaken) {
+        const teacherComment = document.getElementById('teacherComment');
+        
+        if (subjectsTaken === 0) {
+          teacherComment.textContent = 'No academic records available for assessment.';
+          return;
+        }
+        
+        if (averageScore >= 85) {
+          teacherComment.textContent = 'Exceptional performance! Demonstrates outstanding commitment to academic excellence.';
+        } else if (averageScore >= 65) {
+          teacherComment.textContent = 'Very good performance. Shows strong grasp of concepts and consistent effort.';
+        } else if (averageScore >= 55) {
+          teacherComment.textContent = 'Good performance. Demonstrates satisfactory understanding of the curriculum.';
+        } else if (averageScore >= 35) {
+          teacherComment.textContent = 'Average performance. Basic understanding of subjects shown. Needs to improve study methods.';
+        } else {
+          teacherComment.textContent = `Unsatisfactory performance. Failed ${failedCount} subjects. Requires intensive remediation and close monitoring.`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

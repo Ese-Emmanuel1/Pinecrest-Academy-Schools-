@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events - Pinecrest Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            overflow-x: hidden;
+            color: #333;
+            background-color: #f5f7fa;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100vw;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(26, 95, 180, 0.1);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 55px;
+            height: 55px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #1a5fb4 0%, #1c71d8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px #1a5fb4;
+            transition: all 0.3s ease;
+        }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a5fb4;
+            letter-spacing: 0.5px;
+        }
+        .school-motto {
+            font-style: italic;
+            color: #1a5fb4;
+            font-weight: 600;
+            margin-left: 20px;
+            padding-left: 20px;
+            border-left: 2px solid #1a5fb4;
+            text-shadow: 0 0 5px rgba(26, 95, 180, 0.2);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 12px;
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+            padding: 8px 5px;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #1a5fb4;
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        nav ul li a:hover {
+            color: #1a5fb4;
+        }
+        nav ul li a.active {
+            color: #1a5fb4;
+        }
+        nav ul li a.active::after {
+            width: 100%;
+        }
+        /* Enhanced Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1002;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .hamburger:hover {
+            background: rgba(26, 95, 180, 0.1);
+        }
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: #1a5fb4;
+            margin: 3px 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        /* News Ticker Section */
+        .news-ticker {
+            background: #1a5fb4;
+            color: white;
+            padding: 15px 0;
+            overflow: hidden;
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .ticker-content {
+            display: flex;
+            align-items: center;
+            animation: ticker-scroll 20s linear infinite;
+            white-space: nowrap;
+            transform: translateX(100%);
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .ticker-label {
+            background: #0d4e9c;
+            padding: 5px 15px;
+            border-radius: 30px;
+            margin-right: 20px;
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 40vh;
+            min-height: 300px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+            max-width: 100vw;
+            overflow-x: hidden;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            max-width: 900px;
+            padding: 20px;
+            z-index: 10;
+            margin-top: 60px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            background: #f5f7fa;
+            padding: 15px 5%;
+            border-bottom: 1px solid #e1e5ea;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 1rem;
+        }
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin: 0 10px;
+            color: #aaa;
+        }
+        .breadcrumb-item a {
+            color: #1a5fb4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumb-item.current {
+            color: #333;
+            font-weight: 600;
+        }
+        /* News Categories Section */
+        .news-categories {
+            padding: 60px 5% 40px;
+            background: #f5f7fa;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .categories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .categories-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1a5fb4;
+            margin-bottom: 20px;
+        }
+        .categories-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .categories-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .category-btn {
+            padding: 12px 25px;
+            background: #f9fafc;
+            border: 2px solid #e1e5ea;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            min-width: 150px;
+            text-align: center;
+        }
+        .category-btn.active {
+            background: #1a5fb4;
+            color: white;
+            border-color: #1a5fb4;
+        }
+        .category-btn:hover:not(.active) {
+            background: #e6ebf0;
+            border-color: #1a5fb4;
+            color: #1a5fb4;
+        }
+        /* News Grid Section */
+        .news-grid-section {
+            padding: 40px 5% 80px;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .news-grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .news-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+        .news-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #1a5fb4;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .news-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            z-index: 2;
+        }
+        .news-content {
+            padding: 25px;
+        }
+        .news-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+        .news-card:hover .news-title {
+            color: #1a5fb4;
+        }
+        .news-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .news-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #1a5fb4;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .read-more:hover {
+            color: #0d4e9c;
+            gap: 12px;
+        }
+        /* Featured News Section */
+        .featured-news {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #1a5fb4 0%, #1c71d8 100%);
+            color: white;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .featured-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .featured-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .featured-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .featured-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+        .featured-card:hover {
+            transform: translateY(-5px);
+        }
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+            overflow: hidden;
+        }
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .featured-card:hover .featured-image img {
+            transform: scale(1.05);
+        }
+        .featured-content {
+            flex: 2;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .featured-category {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .featured-title-content {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .featured-excerpt {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .featured-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .featured-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .featured-read-more {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .featured-read-more:hover {
+            background: white;
+            color: #1a5fb4;
+            transform: translateY(-2px);
+        }
+        /* Upcoming Events Section */
+        .events-section {
+            padding: 80px 5%;
+            background: #f5f7fa;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .events-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1a5fb4;
+            margin-bottom: 20px;
+        }
+        .events-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+        .events-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .event-card:hover {
+            transform: translateX(5px);
+        }
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #1a5fb4, #1c71d8);
+        }
+        .event-date {
+            text-align: center;
+            min-width: 100px;
+        }
+        .event-day {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a5fb4;
+            display: block;
+        }
+        .event-month {
+            font-size: 1.1rem;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .event-content {
+            flex: 1;
+        }
+        .event-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .event-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .event-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .event-register {
+            background: #1a5fb4;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+        .event-register:hover {
+            background: #0d4e9c;
+            transform: translateY(-2px);
+        }
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 80px 5%;
+            background: #1a2a3a;
+            color: white;
+            text-align: center;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .newsletter-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .newsletter-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .newsletter-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 15px;
+        }
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+        .newsletter-btn {
+            background: #1a5fb4;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .newsletter-btn:hover {
+            background: #0d4e9c;
+            transform: translateY(-2px);
+        }
+        .newsletter-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .newsletter-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        /* Footer Section */
+        footer {
+            background: #1a2a3a;
+            color: #fff;
+            padding: 70px 5% 30px;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #1a5fb4;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-info-footer {
+            list-style: none;
+        }
+        .contact-info-footer li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .contact-icon-footer {
+            color: #1a5fb4;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .developer-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .developer-info h4 {
+            color: #1a5fb4;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .developer-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .developer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .developer-icon {
+            color: #1a5fb4;
+            font-size: 1.2rem;
+        }
+        /* Mobile Navigation Drawer - UPDATED */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease-in-out;
+            padding: 60px 20px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-nav.active {
+            right: 0;
+        }
+        .close-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #1a5fb4;
+            background: rgba(26, 95, 180, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .close-nav:hover {
+            background: rgba(26, 95, 180, 0.2);
+        }
+        .mobile-nav ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .mobile-nav ul li {
+            margin-bottom: 10px;
+        }
+        .mobile-nav ul li a {
+            display: block;
+            padding: 15px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mobile-nav ul li a:hover {
+            background-color: #f0f7ff;
+            color: #1a5fb4;
+            transform: translateX(5px);
+        }
+        .mobile-nav ul li a i {
+            width: 20px;
+            text-align: center;
+        }
+        .mobile-nav-header {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        .mobile-nav-header .logo {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+        .overlay-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+        .overlay-nav.active {
+            display: block;
+        }
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .featured-card {
+                flex-direction: column;
+            }
+            .featured-image {
+                min-width: auto;
+                height: 250px;
+            }
+            .school-motto {
+                display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                padding: 12px 15px;
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+            .logo-container {
+                margin-bottom: 0;
+            }
+            nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+                position: static;
+                margin-left: auto;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .categories-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            .category-btn {
+                width: 80%;
+            }
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .event-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .event-date {
+                margin-bottom: 15px;
+            }
+            .news-ticker {
+                top: 70px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .categories-title, .events-title, .featured-title {
+                font-size: 2rem;
+            }
+            .news-title {
+                font-size: 1.3rem;
+            }
+            .featured-title-content {
+                font-size: 1.5rem;
+            }
+            .news-ticker {
+                top: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- News Ticker Section -->
+    <div class="news-ticker">
+        <div class="ticker-content">
+            <span class="ticker-label">Latest News</span>
+            <span>2024 Admissions Now Open • Annual Science Fair on October 15th • Basketball Team Wins Regional Championship • New STEM Wing Opening Soon • Parent-Teacher Conference Scheduled for Next Month</span>
+        </div>
+    </div>
+    <!-- Mobile Navigation Drawer -->
+    <div class="overlay-nav" id="overlayNav"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="close-nav" id="closeNav">&times;</div>
+        <div class="mobile-nav-header">
+            <div class="logo-container">
+                <div class="logo">PA</div>
+                <div class="logo-text">Pinecrest Academy</div>
+            </div>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="academic.html"><i class="fas fa-book"></i> Academics</a></li>
+            <li><a href="admission.html"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+            <li><a href="resultchecker.html"><i class="fas fa-check-circle"></i> Check Result</a></li>
+            <li><a href="sport.html"><i class="fas fa-basketball-ball"></i> Sports Activities</a></li>
+            <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+            <li><a href="contact_us.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">PA</div>
+            <div class="logo-text">Pinecrest Academy</div>
+            <div class="school-motto">Excellence Through Knowledge & Character</div>
+        </div>
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="academic.html">Academics</a></li>
+                <li><a href="admission.html">Admissions</a></li>
+                <li><a href="resultchecker.html">Check Result</a></li>
+                <li><a href="sport.html">Sports</a></li>
+                <li><a href="news.html" class="active">News</a></li>
+                <li><a href="contact_us.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">News & Events</h1>
+            <p class="hero-subtitle">Stay updated with the latest happenings at Pinecrest Academy</p>
+        </div>
+    </section>
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <div class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </div>
+            <div class="breadcrumb-item current">News & Events</div>
+        </div>
+    </div>
+    <!-- News Categories Section -->
+    <section class="news-categories">
+        <div class="categories-container">
+            <h2 class="categories-title">Explore Our News</h2>
+            <p class="categories-subtitle">Discover the latest updates, achievements, and events from our vibrant school community</p>
+            <div class="categories-tabs">
+                <button class="category-btn active" data-category="all">All News</button>
+                <button class="category-btn" data-category="academics">Academics</button>
+                <button class="category-btn" data-category="sports">Sports</button>
+                <button class="category-btn" data-category="events">Events</button>
+                <button class="category-btn" data-category="achievements">Achievements</button>
+                <button class="category-btn" data-category="announcements">Announcements</button>
+            </div>
+        </div>
+    </section>
+    <!-- Featured News Section -->
+    <section class="featured-news">
+        <div class="featured-container">
+            <h2 class="featured-title">Featured Stories</h2>
+            <p class="featured-subtitle">Highlights from our school community that showcase excellence, innovation, and achievement</p>
+            <div class="featured-card">
+                <div class="featured-image">
+                    
+                    <img src="https://i.pinimg.com/1200x/4c/db/76/4cdb7674ed60d791f3328a97c157ca97.jpg" alt="Science Fair Winners">
+                </div>
+                <div class="featured-content">
+                    <span class="featured-category">Academics</span>
+                    <h3 class="featured-title-content">Pinecrest Students Win National Science Fair with Innovative Water Purification System</h3>
+                    <p class="featured-excerpt">A team of Pinecrest Academy students took home the top prize at the National Science Fair with their groundbreaking water purification system that uses solar energy and locally sourced materials. The project, developed by seniors Aisha Mohammed, Tunde Okafor, and Fatima Bello, impressed judges with its practical application and potential to impact communities with limited access to clean water.</p>
+                    <div class="featured-meta">
+                        <div class="featured-author">
+                            <div class="featured-avatar">
+                                <img src="https://i.pinimg.com/1200x/5d/89/3e/5d893e33ca5726f64cfd8f1687d567d5.jpg" alt="Author">
+                            </div>
+                            <span>By Dr. Sarah Omosefe</span>
+                        </div>
+                        <span>October 15, 2023</span>
+                    </div>
+                    <a href="#" class="featured-read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="featured-card">
+                <div class="featured-image">
+                    <img src="https://i.pinimg.com/1200x/1e/07/f7/1e07f771978913c35d0f8aa60fa2c31a.jpg" alt="Basketball Championship">
+                </div>
+                <div class="featured-content">
+                    <span class="featured-category">Sports</span>
+                    <h3 class="featured-title-content">Varsity Basketball Team Clinches Regional Championship in Thrilling Overtime Victory</h3>
+                    <p class="featured-excerpt">In a nail-biting finish that had spectators on the edge of their seats, our Varsity Basketball Team secured the Regional Championship with a 78-75 overtime victory against our long-time rivals. Captain Emeka Okonkwo scored the game-winning basket with just 2.3 seconds remaining, capping off an incredible season that saw the team go undefeated in conference play.</p>
+                    <div class="featured-meta">
+                        <div class="featured-author">
+                            <div class="featured-avatar">
+                                <img src="https://i.pinimg.com/1200x/65/e5/d9/65e5d97b16a1719776de61df02c1b1e6.jpg" alt="Author">
+                            </div>
+                            <span>By Coach Godwills Osayande</span>
+                        </div>
+                        <span>September 28, 2023</span>
+                    </div>
+                    <a href="#" class="featured-read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- News Grid Section -->
+    <section class="news-grid-section">
+        <div class="news-grid-container">
+            <h2 class="categories-title">Latest News</h2>
+            <p class="categories-subtitle">Stay informed with our most recent updates and stories</p>
+            <div class="news-grid" id="newsGrid">
+                <!-- News Item 1 -->
+                <div class="news-card" data-category="academics">
+                    <div class="news-image">
+                        <img src="https://www.scholarshipregion.com/wp-content/uploads/2023/06/Kevin-Kemboi-Kapsabet-Boys-High-School-Wins-Mathematics-Contest.jpg" alt="New STEM Wing">
+                        <span class="news-category">Academics</span>
+                        <span class="news-date">October 10, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">State-of-the-Art STEM Wing Opens with Cutting-Edge Laboratories</h3>
+                        <p class="news-excerpt">Pinecrest Academy proudly inaugurated its new STEM Wing, featuring advanced laboratories for robotics, computer science, engineering, and biotechnology. The facility includes collaborative workspaces, 3D printing stations, and virtual reality equipment to enhance experiential learning.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://i.pinimg.com/1200x/5d/89/3e/5d893e33ca5726f64cfd8f1687d567d5.jpg" alt="Author">
+                                </div>
+                                <span>Dr. Sarah Omosefe</span>
+                            </div>
+                            <span>5 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News Item 2 -->
+                <div class="news-card" data-category="sports">
+                    <div class="news-image">
+                        <img src="https://www.athletics.africa/wp-content/uploads/2018/04/gontse-morake-asa-u20-champs.jpg" alt="Track & Field">
+                        <span class="news-category">Sports</span>
+                        <span class="news-date">October 5, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Track & Field Team Breaks Three School Records at Regional Meet</h3>
+                        <p class="news-excerpt">Our Track & Field team delivered outstanding performances at the Regional Championships, breaking school records in the 100m dash, 4x100m relay, and long jump. Sophomore sprinter Chioma Nwosu set a new record in the 100m with a blistering time of 11.8 seconds.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://i.pinimg.com/736x/5f/57/8a/5f578a7e416452224594e0e095fbf296.jpg" alt="Author">
+                                </div>
+                                <span>Coach David Guobadia</span>
+                            </div>
+                            <span>3 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News Item 3 -->
+                <div class="news-card" data-category="events">
+                    <div class="news-image">
+                        <img src="https://i.pinimg.com/736x/a9/58/38/a95838f304b9e7376c5d708630d9a445.jpg" alt="Cultural Festival">
+                        <span class="news-category">Events</span>
+                        <span class="news-date">September 30, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Annual Cultural Festival Celebrates Diversity with Record Attendance</h3>
+                        <p class="news-excerpt">Over 500 families attended our Annual Cultural Festival, which featured traditional dances, international cuisine, art exhibitions, and performances representing more than 15 different cultures. The event highlighted our school's commitment to fostering global citizenship and cultural understanding.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://i.pinimg.com/1200x/6c/4f/e6/6c4fe644a7d293366f0b3f9ed843de03.jpg" alt="Author">
+                                </div>
+                                <span>Ms. Fatima Adedeji</span>
+                            </div>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News Item 4 -->
+                <div class="news-card" data-category="achievements">
+                    <div class="news-image">
+                        <img src="https://i.pinimg.com/736x/89/97/42/8997423a465e663d3e3c39ab906a6e9d.jpg" alt="Math Olympiad">
+                        <span class="news-category">Achievements</span>
+                        <span class="news-date">September 25, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Math Team Places Second in National Mathematics Olympiad</h3>
+                        <p class="news-excerpt">Our Mathematics Team secured second place in the National Mathematics Olympiad, competing against 45 schools from across the country. Senior Ibrahim Yusuf earned a perfect score on the individual competition, earning him a spot on the national team for the International Mathematical Olympiad.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Author">
+                                </div>
+                                <span>Mr. David Thompson</span>
+                            </div>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News Item 5 -->
+                <div class="news-card" data-category="announcements">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Admissions">
+                        <span class="news-category">Announcements</span>
+                        <span class="news-date">September 20, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">2024 Admissions Now Open with Early Application Deadline Extended</h3>
+                        <p class="news-excerpt">Applications for the 2024-2025 academic year are now being accepted. Due to popular demand, we've extended our early application deadline to November 15th. Prospective families are encouraged to schedule a campus tour and attend our upcoming Open House on October 28th.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Author">
+                                </div>
+                                <span>Admissions Office</span>
+                            </div>
+                            <span>3 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News Item 6 -->
+                <div class="news-card" data-category="academics">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="IB Program">
+                        <span class="news-category">Academics</span>
+                        <span class="news-date">September 15, 2023</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">International Baccalaureate Program Achieves 100% Pass Rate for Fifth Consecutive Year</h3>
+                        <p class="news-excerpt">For the fifth consecutive year, our International Baccalaureate Diploma Programme has achieved a 100% pass rate, with 42% of students earning the prestigious bilingual diploma. The average score of 36 points exceeds the global average of 30 points.</p>
+                        <div class="news-meta">
+                            <div class="news-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Author">
+                                </div>
+                                <span>Dr. Michael Chen</span>
+                            </div>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Upcoming Events Section -->
+    <section class="events-section">
+        <div class="events-container">
+            <h2 class="events-title">Upcoming Events</h2>
+            <p class="events-subtitle">Mark your calendars for these important dates and exciting opportunities</p>
+            <div class="events-list">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">28</span>
+                        <span class="event-month">Oct</span>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Annual Open House</h3>
+                        <p class="event-desc">Prospective families are invited to tour our campus, meet faculty and current students, and learn about our academic programs. The event will feature classroom demonstrations, student performances, and information sessions.</p>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Pinecrest Academy Campus</span>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>9:00 AM - 2:00 PM</span>
+                        </div>
+                        <a href="#" class="event-register">Register Now</a>
+                    </div>
+                </div>
+                <!-- Event 2 -->
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">15</span>
+                        <span class="event-month">Nov</span>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Parent-Teacher Conferences</h3>
+                        <p class="event-desc">Scheduled appointments for parents to meet with teachers and discuss their child's academic progress. Conferences will be held over three days to accommodate all families. Sign-up sheets are available in the parent portal.</p>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Various Classrooms</span>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>Multiple Time Slots</span>
+                        </div>
+                        <a href="#" class="event-register">Sign Up</a>
+                    </div>
+                </div>
+                <!-- Event 3 -->
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">05</span>
+                        <span class="event-month">Dec</span>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Winter Concert & Art Exhibition</h3>
+                        <p class="event-desc">Join us for an evening of musical performances by our bands, choirs, and orchestras, followed by a reception in the art gallery featuring student artwork from all grade levels. Refreshments will be served.</p>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Performing Arts Center</span>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>6:30 PM - 9:00 PM</span>
+                        </div>
+                        <a href="#" class="event-register">RSVP</a>
+                    </div>
+                </div>
+                <!-- Event 4 -->
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">15</span>
+                        <span class="event-month">Dec</span>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Inter-House Debate Competition</h3>
+                        <p class="event-desc">The annual Inter-House Debate Competition will feature teams from all four houses competing on current global issues. The event is open to all students and families, with awards for best speaker, best team, and most improved debater.</p>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Auditorium</span>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>1:00 PM - 5:00 PM</span>
+                        </div>
+                        <a href="#" class="event-register">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h2 class="newsletter-title">Stay Informed</h2>
+            <p class="newsletter-subtitle">Subscribe to our newsletter to receive the latest news, events, and updates from Pinecrest Academy directly to your inbox</p>
+            <form id="newsletterForm" class="newsletter-form">
+                <input type="email" id="newsletterEmail" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+            <div id="newsletterSuccess" class="newsletter-success">
+                Thank you for subscribing! You'll receive our next newsletter soon.
+            </div>
+            <div id="newsletterError" class="newsletter-error">
+                Oops! Something went wrong. Please try again later.
+            </div>
+        </div>
+    </section>
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Pinecrest Academy</h3>
+                <p>Providing excellence in education since 1985. Our mission is to empower students with knowledge, skills, and values that will enable them to become responsible global citizens and lifelong learners.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="academics.html"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                    <li><a href="admission.html"><i class="fas fa-chevron-right"></i> Admissions</a></li>
+                    <li><a href="resultchecker.html"><i class="fas fa-chevron-right"></i> Check Result</a></li>
+                    <li><a href="sport.html"><i class="fas fa-chevron-right"></i> Sports Activities</a></li>
+                    <li><a href="news.html"><i class="fas fa-chevron-right"></i> News & Events</a></li>
+                    <li><a href="contact_us.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="contact-info-footer">
+                    <li>
+                        <span class="contact-icon-footer"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>12 Ewere street off upper sakponba road, Benin City</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon-footer"><i class="fas fa-phone"></i></span>
+                        <span>+2347079878605</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon-footer"><i class="fas fa-envelope"></i></span>
+                        <span>info@pinecrestacademy.edu</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon-footer"><i class="fas fa-clock"></i></span>
+                        <span>Monday - Friday: 8:00 AM - 5:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Developer Information</h3>
+                <div class="developer-info">
+                    <h4>Website Developer</h4>
+                    <p>For technical support or website inquiries, please contact:</p>
+                    <div class="developer-contact">
+                        <div class="developer-item">
+                            <span class="developer-icon"><i class="fas fa-user"></i></span>
+                            <span>smartdev-digital-solution</span>
+                        </div>
+                        <div class="developer-item">
+                            <span class="developer-icon"><i class="fas fa-envelope"></i></span>
+                            <a href="mailto:john.doe@webdev.com" style="color: #ccc; text-decoration: none;">smartdevhub9@gmail.com</a>
+                        </div>
+                        <div class="developer-item">
+                            <span class="developer-icon"><i class="fas fa-phone"></i></span>
+                            <a href="tel:+15559876543" style="color: #ccc; text-decoration: none;">+2347079878605</a>
+                        </div>
+                        <div class="developer-item">
+                            <span class="developer-icon"><i class="fas fa-globe"></i></span>
+                            <a href="https://smartdev-digital-solution.web.app/" target="_blank" style="color: #ccc; text-decoration: none;">https://smartdev-digital-solution.web.app/</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Pinecrest Academy. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: #1a5fb4;"></i> for Excellence in Education</p>
+        </div>
+    </footer>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdkwzez-XBWfEvdBUe40JNMLWKWWY8Ys0",
+            authDomain: "legacy-academy-fa085.firebaseapp.com",
+            databaseURL: "https://legacy-academy-fa085-default-rtdb.firebaseio.com",
+            projectId: "legacy-academy-fa085",
+            storageBucket: "legacy-academy-fa085.firebasestorage.app",
+            messagingSenderId: "904422889974",
+            appId: "1:904422889974:web:b5b8a0c804c69792378fd7",
+            measurementId: "G-2J0F33L4GV"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const mobileNav = document.getElementById('mobileNav');
+        const closeNav = document.getElementById('closeNav');
+        const overlayNav = document.getElementById('overlayNav');
+
+        // Function to open mobile nav
+        function openMobileNav() {
+            mobileNav.classList.add('active');
+            overlayNav.classList.add('active');
+            hamburger.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close mobile nav
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            overlayNav.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        hamburger.addEventListener('click', openMobileNav);
+        closeNav.addEventListener('click', closeMobileNav);
+        overlayNav.addEventListener('click', closeMobileNav);
+
+        // News category filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const newsCards = document.querySelectorAll('.news-card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    const category = btn.getAttribute('data-category');
+                    
+                    // Filter news cards
+                    newsCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Newsletter form submission
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('newsletterEmail').value;
+                    const timestamp = new Date().toISOString();
+                    
+                    // Save to Firebase
+                    const newSubscriberRef = database.ref('newsletter_subscribers').push();
+                    newSubscriberRef.set({
+                        email: email,
+                        timestamp: timestamp,
+                        status: 'active'
+                    })
+                    .then(() => {
+                        // Show success message
+                        document.getElementById('newsletterSuccess').style.display = 'block';
+                        document.getElementById('newsletterError').style.display = 'none';
+                        // Reset form
+                        newsletterForm.reset();
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            document.getElementById('newsletterSuccess').style.display = 'none';
+                        }, 5000);
+                    })
+                    .catch(() => {
+                        // Show error message
+                        document.getElementById('newsletterSuccess').style.display = 'none';
+                        document.getElementById('newsletterError').style.display = 'block';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

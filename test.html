@@ -1,0 +1,191 @@
+<!-- Add this button to your academic report page -->
+<button id="downloadReportBtn" class="btn btn-primary">
+  <i class="fas fa-camera"></i> Download Report as Image
+</button>
+
+<!-- Add this script section to your academic report page -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadBtn = document.getElementById('downloadReportBtn');
+  
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', function() {
+      // Show loading state
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Capturing report...';
+      downloadBtn.disabled = true;
+      
+      // Get the report container - adjust selector based on your actual report structure
+      const reportContainer = document.querySelector('.report-container') || 
+                             document.querySelector('.result-display') || 
+                             document.querySelector('.container');
+      
+      if (!reportContainer) {
+        alert('Report container not found');
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        return;
+      }
+      
+      // Options for html2canvas to ensure high quality
+      const options = {
+        scale: 2, // Higher scale for better quality
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        onclone: function(clonedDoc) {
+          // Hide download button in the cloned document
+          const clonedBtn = clonedDoc.querySelector('#downloadReportBtn');
+          if (clonedBtn) clonedBtn.style.display = 'none';
+          
+          // Ensure all elements are properly rendered
+          const allElements = clonedDoc.querySelectorAll('*');
+          allElements.forEach(el => {
+            el.style.boxSizing = 'border-box';
+          });
+        }
+      };
+      
+      // Capture the report as an image
+      html2canvas(reportContainer, options).then(function(canvas) {
+        // Create a download link
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+        const studentName = document.querySelector('.student-name')?.textContent || 'report';
+        const filename = `PineCrest-Report-${studentName.replace(/\s+/g, '-')}-${timestamp}.png`;
+        
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Reset button
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        
+        // Show success message
+        showDownloadSuccess();
+      }).catch(function(error) {
+        console.error('Error capturing report:', error);
+        alert('Error capturing report. Please try again.');
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+      });
+    });
+  }
+  
+  function showDownloadSuccess() {
+    // Create and show success message
+    const successMsg = document.createElement('div');
+    successMsg.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        animation: slideIn 0.3s ease-out;
+      ">
+        <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+        <span>Report downloaded successfully!</span>
+      </div>
+    `;
+    
+    document.body.appendChild(successMsg);
+    
+    // Remove message after 3 seconds
+    setTimeout(() => {
+      successMsg.remove();
+    }, 3000);
+  }
+});
+</script>
+
+<style>
+/* Add these styles for the download button */
+#downloadReportBtn {
+  background: linear-gradient(135deg, #1a5fb4, #1c71d8);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px auto;
+  transition: all 0.3s ease;
+}
+
+#downloadReportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(26, 95, 180, 0.3);
+}
+
+#downloadReportBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Ensure report looks good for capture */
+.report-container, .result-display, .container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(26, 95, 180, 0.1);
+  position: relative;
+}
+
+/* Add Pinecrest watermark for the screenshot */
+.report-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Print styles for better screenshot quality */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .report-container, .report-container * {
+    visibility: visible;
+  }
+  .report-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+</style>
